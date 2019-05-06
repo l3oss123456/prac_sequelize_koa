@@ -3,23 +3,18 @@ const router = new Router();
 const user = require('../database/model/user')
 const jwt = require("jwt-simple");
 
-const secret = "mysecretKey"
-// //ใช้ในการ decode jwt ออกมา
-// const ExtractJwt = require("passport-jwt").ExtractJwt;
-// //ใช้ในการประกาศ Strategy
-// const JwtStrategy = require("passport-jwt").Strategy;
-// const passport = require("passport");
+// const CreateUser = require('../database/command/user/create')
+const {CreateUser} = require('../src/controlers/user/create')
 
-// router.get('/', (ctx, next => {
-//     ctx.body = { msg: 'Hello World' };
-//     console.log(ctx.body)
-// }));
-router.post('/insert', middleware, async(ctx, next) => {
+const secret = "mysecretKey"
+
+router.post('/insert', async(ctx, next) => {
     const username = ctx.request.body.username
     const password = ctx.request.body.password
     // const id = ctx.request.body.id
 
-    let data = await user.create({username,password})
+    // let data = await user.create({username,password})
+    let data = await CreateUser(username,password)
     ctx.body = data  
     data = await user.findAll()
     ctx.body = data
@@ -34,17 +29,17 @@ router.get('/', middleware,  async(ctx, next) => {
     console.log(ctx.request.header)   
 });
 
-router.put('/update', async(ctx, next) => {
-    const username = ctx.request.body.username
-    const password = ctx.request.body.password
-    const id = ctx.request.body.id
-    let data = await user.update({ username: username, password: password}, {where: {id: id}})
-    ctx.body = data
-    data = await user.findAll()
-    ctx.body = data
-    console.log(data)
-    console.log(ctx.status)
-});
+// router.put('/update', async(ctx, next) => {
+//     const username = ctx.request.body.username
+//     const password = ctx.request.body.password
+//     const id = ctx.request.body.id
+//     let data = await user.update({ username: username, password: password}, {where: {id: id}})
+//     ctx.body = data
+//     data = await user.findAll()
+//     ctx.body = data
+//     console.log(data)
+//     console.log(ctx.status)
+// });
 
 router.delete('/delete', middleware, async(ctx, next) => {
     const id = ctx.request.body.id

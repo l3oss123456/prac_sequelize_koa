@@ -1,0 +1,19 @@
+{
+    "presets": ["latest"],
+    "plugins": [
+        [
+            "@babel/plugin-transform-arrow-functions",
+            {
+                "spec": true
+            }
+        ],
+        [
+            "@babel/plugin-transform-async-to-generator",
+            null
+        ],
+        [
+            "@babel/plugin-transform-modules-commonjs",
+            null
+        ]
+    ]
+}
